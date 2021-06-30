@@ -1,27 +1,38 @@
 import './sass/main.scss';
-import getFetch from './apiService.js';
+import ApiService from './apiService.js';
 import imagesTpl from './templates/templateForImages.hbs';
 
 const searchForm = document.getElementById('search-form');
 const containerOfItems = document.querySelector('.gallery');
+const LoadMoreBtn = document.querySelector('[data-action="load-more"]');
 const debounce = require('lodash.debounce');
-
-const KEY = '22290512-61c8db1e23d404eb0727e3aee';
-const PER_PAGE = '12';
-const BASE_URL = 'https://pixabay.com/api/';
+const imagesApiService = new ApiService();
 
 searchForm.addEventListener(
   'input',
   debounce(e => {
     e.preventDefault();
-    let query = e.target.value.toLowerCase().trim();
-    if (query !== '') {
-      getFetch(BASE_URL, query, KEY, PER_PAGE).then(createGalleryCards);
+    imagesApiService.searchQuery = e.target.value.toLowerCase().trim();
+    if (imagesApiService.searchQuery !== '') {
+      imagesApiService.resetPage();
+      imagesApiService.fetchImages().then(data => {
+        clearContainerOfImages();
+        createGalleryCards(data);
+      });
     }
-    containerOfItems.innerHTML = '';
-  }, 1000),
+  }, 500),
 );
 
+LoadMoreBtn.addEventListener('click', addMoreImages);
+
 function createGalleryCards(arrayOfImages) {
-  return (containerOfItems.innerHTML = imagesTpl(arrayOfImages));
+  return (containerOfItems.insertAdjacentHTML('beforeend', imagesTpl(arrayOfImages)));
+}
+
+function addMoreImages() {
+  imagesApiService.fetchImages().then(createGalleryCards);
+}
+
+function clearContainerOfImages() {
+  containerOfItems.innerHTML = '';
 }
