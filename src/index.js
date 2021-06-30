@@ -26,11 +26,15 @@ searchForm.addEventListener(
 LoadMoreBtn.addEventListener('click', addMoreImages);
 
 function createGalleryCards(arrayOfImages) {
-  return (containerOfItems.insertAdjacentHTML('beforeend', imagesTpl(arrayOfImages)));
+  return containerOfItems.insertAdjacentHTML('beforeend', imagesTpl(arrayOfImages));
 }
 
 function addMoreImages() {
   imagesApiService.fetchImages().then(createGalleryCards);
+  containerOfItems.scrollIntoView({
+    behavior: 'smooth',
+    block: 'end',
+  });
 }
 
 function clearContainerOfImages() {

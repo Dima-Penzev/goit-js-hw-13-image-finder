@@ -1,0 +1,43 @@
+.gallery {
+  margin: 0;
+  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.picture {
+  display: block;
+  width: 338px;
+}
+
+.photo-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 50px;
+  border: 2px solid gray;
+  border-radius: 3px;
+}
+
+.photo-card:nth-child(n + 5) {
+  margin-top: 50px;
+}
+
+.photo-card:nth-child(4n) {
+  margin-right: 0;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+}
+
+.material-icons {
+  display: block;
+  padding-bottom: 10px;
+}
+
+.stats-item {
+  text-align: center;
+}
