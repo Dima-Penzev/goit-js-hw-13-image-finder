@@ -16,6 +16,9 @@ export default class ApiService {
       .then(data => {
         this.page += 1;
         return data;
+      })
+      .catch(() => {
+        alert('Произошла ошибка при загрузке изображений');
       });
   }
 
