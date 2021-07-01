@@ -56,7 +56,6 @@ observer.observe(marker);
 function createBigImage(array) {
   const photoCards = document.querySelector('.gallery');
   photoCards.addEventListener('click', e => {
-    console.log(e.target);
     if (e.target.getAttribute('class') === 'picture') {
       array.map(elem => {
         if (e.target.getAttribute('src') === elem.webformatURL) {
